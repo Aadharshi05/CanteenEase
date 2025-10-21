@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanteenEase - Effortless Food Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --light-blue: #3b82f6;
+            --primary-green: #059669;
+            --light-green: #10b981;
+            --bg-gradient: linear-gradient(135deg, #1e40af 0%, #059669 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-gradient);
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--light-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        /* Login/Register Screen */
+        .auth-screen {
+            max-width: 450px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .auth-screen h2 {
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 36px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--light-blue);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            color: #6b7280;
+        }
+
+        .auth-toggle a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-toggle a:hover {
+            color: var(--light-blue);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-tab.active {
+            background: var(--bg-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--light-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #9ca3af;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .category-btn:hover {
+            border-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .category-btn.active {
+            background: var(--bg-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-family: 'Pacifico', cursive;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item-img {
+            width: 100%;
+            height: 180px;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .menu-item p {
+            color: #6b7280;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--light-blue);
+            background: white;
+            color: var(--primary-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: var(--light-blue);
+            color: white;
+        }
+
+        .qty-display {
+            font-weight: 700;
+            color: var(--primary-blue);
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Cart Section */
+        .cart-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-section h3 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary-green);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        /* Orders List */
+        .orders-list {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .order-card {
+            padding: 25px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.3s ease;
+        }
+
+        .order-card:hover {
+            background: #f9fafb;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 18px;
+        }
+
+        .status-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-order-placed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-prepared {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-delivered {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .order-items {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .order-time {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .print-btn {
+            padding: 8px 16px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .print-btn:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Print Receipt Styles */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .receipt-modal.show {
+            display: flex;
+        }
+
+        .receipt-content {
+            background: white;
+            max-width: 450px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 0 0 15px 15px;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .receipt-print {
+            padding: 40px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt-print, .receipt-print * {
+                visibility: visible;
+            }
+            .receipt-print {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            .receipt-actions {
+                display: none !important;
+            }
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .receipt-header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+
+        .receipt-header p {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .receipt-body {
+            margin-bottom: 20px;
+        }
+
+        .receipt-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .receipt-items {
+            border-top: 1px dashed #333;
+            border-bottom: 2px dashed #333;
+            padding: 15px 0;
+            margin: 15px 0;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .receipt-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #333;
+        }
+
+        .receipt-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #333;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9ca3af;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Auth Screen -->
+        <div id="authScreen" class="auth-screen">
+            <h2 id="authTitle">Login to CanteenEase</h2>
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
+                    <span id="authBtnText">Login</span>
+                </button>
+            </form>
+            <div class="auth-toggle">
+                <span id="authToggleText">Don't have an account?</span>
+                <a href="#" id="authToggleLink">Register here</a>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="hidden">
+            <header>
+                <div class="logo">
+                    <div class="logo-icon">🍽️</div>
+                    <h1>CanteenEase</h1>
+                </div>
+                <div class="user-section">
+                    <span class="user-name">Welcome, <span id="currentUser"></span></span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+            </header>
+
+            <!-- Navigation -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('menu')">Menu</button>
+                <button class="nav-tab" onclick="showSection('orders')">My Orders</button>
+            </div>
+
+            <!-- Menu Section -->
+            <div id="menuSection">
+                <!-- Search and Filter -->
+                <div class="search-filter-section">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search for your favorite food...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="category-filters">
+                        <button class="category-btn active" onclick="filterCategory('all')">All Items</button>
+                        <button class="category-btn" onclick="filterCategory('breakfast')">🌅 Breakfast</button>
+                        <button class="category-btn" onclick="filterCategory('lunch')">🍽️ Lunch</button>
+                        <button class="category-btn" onclick="filterCategory('snacks')">🍿 Snacks</button>
+                        <button class="category-btn" onclick="filterCategory('chaat')">🌶️ Chaat</button>
+                        <button class="category-btn" onclick="filterCategory('beverages')">☕ Beverages</button>
+                        <button class="category-btn" onclick="filterCategory('desserts')">🍨 Desserts</button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 350px; gap: 25px;">
+                    <div id="menuContainer"></div>
+                    
+                    <div class="cart-section">
+                        <h3>Your Cart</h3>
+                        <div id="cartItems"></div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cartTotal">₹0</span>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="placeOrder()">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="ordersSection" class="hidden">
+                <div class="orders-list" id="ordersList"></div>
+            </div>
+        </div>
+
+        <!-- Receipt Modal -->
+        <div id="receiptModal" class="receipt-modal">
+            <div class="receipt-content">
+                <div id="receiptTemplate" class="receipt-print"></div>
+                <div class="receipt-actions">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="doPrint()">🖨️ Print Receipt</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="closeReceipt()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isLogin = true;
+        let currentUser = null;
+        let cart = {};
+        let orders = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        const menuItems = [
+            // Breakfast
+            { id: 1, name: "Masala Dosa", description: "Crispy dosa with potato filling", price: 70, emoji: "🥞", category: "breakfast" },
+            { id: 2, name: "Idli Sambar", description: "Steamed rice cakes with lentil soup", price: 50, emoji: "🥘", category: "breakfast" },
+            { id: 3, name: "Upma", description: "Savory semolina porridge", price: 45, emoji: "🥣", category: "breakfast" },
+            { id: 4, name: "Poha", description: "Flattened rice with spices", price: 40, emoji: "🍚", category: "breakfast" },
+            { id: 5, name: "Aloo Paratha", description: "Potato stuffed flatbread", price: 60, emoji: "🫓", category: "breakfast" },
+            
+            // Lunch
+            { id: 6, name: "Paneer Butter Masala", description: "Cottage cheese in rich tomato gravy", price: 120, emoji: "🍛", category: "lunch" },
+            { id: 7, name: "Veg Biryani", description: "Aromatic rice with vegetables", price: 110, emoji: "🍲", category: "lunch" },
+            { id: 8, name: "Dal Tadka", description: "Yellow lentils with spices", price: 80, emoji: "🍛", category: "lunch" },
+            { id: 9, name: "Chole Bhature", description: "Spicy chickpeas with fried bread", price: 85, emoji: "🫓", category: "lunch" },
+            { id: 10, name: "Veg Fried Rice", description: "Mixed vegetables with rice", price: 90, emoji: "🍚", category: "lunch" },
+            { id: 11, name: "Paneer Tikka", description: "Grilled cottage cheese cubes", price: 130, emoji: "🧆", category: "lunch" },
+            { id: 12, name: "Pasta Alfredo", description: "Creamy white sauce pasta", price: 100, emoji: "🍝", category: "lunch" },
+            { id: 13, name: "Veg Noodles", description: "Stir-fried hakka noodles", price: 85, emoji: "🍜", category: "lunch" },
+            
+            // Snacks
+            { id: 14, name: "Veggie Burger", description: "Fresh vegetables with special sauce", price: 80, emoji: "🍔", category: "snacks" },
+            { id: 15, name: "Veg Sandwich", description: "Grilled sandwich with veggies", price: 60, emoji: "🥪", category: "snacks" },
+            { id: 16, name: "Cheese Sandwich", description: "Grilled cheese sandwich", price: 55, emoji: "🥪", category: "snacks" },
+            { id: 17, name: "French Fries", description: "Crispy golden fries", price: 50, emoji: "🍟", category: "snacks" },
+            { id: 18, name: "Veg Momos", description: "Steamed vegetable dumplings", price: 70, emoji: "🥟", category: "snacks" },
+            { id: 19, name: "Spring Rolls", description: "Crispy vegetable rolls", price: 65, emoji: "🌯", category: "snacks" },
+            { id: 20, name: "Veg Cutlet", description: "Crispy vegetable patties", price: 40, emoji: "🍢", category: "snacks" },
+            { id: 21, name: "Margherita Pizza", description: "Cheese and tomato classic", price: 150, emoji: "🍕", category: "snacks" },
+            
+            // Chaat
+            { id: 22, name: "Samosa", description: "Crispy pastry with potato filling", price: 20, emoji: "🥙", category: "chaat" },
+            { id: 23, name: "Pav Bhaji", description: "Spiced vegetables with bread", price: 75, emoji: "🍞", category: "chaat" },
+            { id: 24, name: "Vada Pav", description: "Potato fritter in bread bun", price: 30, emoji: "🍔", category: "chaat" },
+            
+            // Beverages
+            { id: 25, name: "Masala Chai", description: "Spiced Indian tea", price: 20, emoji: "☕", category: "beverages" },
+            { id: 26, name: "Cold Coffee", description: "Chilled coffee with ice cream", price: 50, emoji: "🥤", category: "beverages" },
+            { id: 27, name: "Fresh Juice", description: "Seasonal fruit juice", price: 40, emoji: "🧃", category: "beverages" },
+            { id: 28, name: "Lassi", description: "Sweet yogurt drink", price: 35, emoji: "🥛", category: "beverages" },
+            
+            // Desserts
+            { id: 29, name: "Ice Cream", description: "Creamy vanilla ice cream", price: 45, emoji: "🍨", category: "desserts" },
+            { id: 30, name: "Fruit Salad", description: "Fresh seasonal fruits", price: 60, emoji: "🍇", category: "desserts" }
+        ];
+
+        // Auth Toggle
+        document.getElementById('authToggleLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            document.getElementById('authTitle').textContent = isLogin ? 'Login to CanteenEase' : 'Register for CanteenEase';
+            document.getElementById('authBtnText').textContent = isLogin ? 'Login' : 'Register';
+            document.getElementById('authToggleText').textContent = isLogin ? "Don't have an account?" : "Already have an account?";
+            document.getElementById('authToggleLink').textContent = isLogin ? 'Register here' : 'Login here';
+        });
+
+        // Auth Form Submit
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            currentUser = username;
+            document.getElementById('currentUser').textContent = username;
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            renderMenu();
+            setupSearch();
+        });
+
+        // Setup Search
+        function setupSearch() {
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderMenu();
+            });
+        }
+
+        // Filter by Category
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMenu();
+        }
+
+        // Get Filtered Items
+        function getFilteredItems() {
+            let filtered = menuItems;
+            
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(item => item.category === currentCategory);
+            }
+            
+            if (searchQuery) {
+                filtered = filtered.filter(item => 
+                    item.name.toLowerCase().includes(searchQuery) || 
+                    item.description.toLowerCase().includes(searchQuery)
+                );
+            }
+            
+            return filtered;
+        }
+
+        // Group items by category
+        function groupByCategory(items) {
+            const categories = {
+                breakfast: { title: '🌅 Breakfast', items: [] },
+                lunch: { title: '🍽️ Lunch', items: [] },
+                snacks: { title: '🍿 Snacks', items: [] },
+                chaat: { title: '🌶️ Chaat', items: [] },
+                beverages: { title: '☕ Beverages', items: [] },
+                desserts: { title: '🍨 Desserts', items: [] }
+            };
+            
+            items.forEach(item => {
+                if (categories[item.category]) {
+                    categories[item.category].items.push(item);
+                }
+            });
+            
+            return categories;
+        }
+
+        // Render Menu
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            const filtered = getFilteredItems();
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No items found matching your search</p></div>';
+                return;
+            }
+            
+            if (currentCategory === 'all' && !searchQuery) {
+                const grouped = groupByCategory(filtered);
+                container.innerHTML = Object.entries(grouped)
+                    .filter(([key, data]) => data.items.length > 0)
+                    .map(([key, data]) => `
+                        <div class="category-section">
+                            <h2 class="category-title">${data.title}</h2>
+                            <div class="menu-grid">
+                                ${data.items.map(item => renderMenuItem(item)).join('')}
+                            </div>
+                        </div>
+                    `).join('');
+            } else {
+                container.innerHTML = `<div class="menu-grid">${filtered.map(item => renderMenuItem(item)).join('')}</div>`;
+            }
+        }
+
+        // Render individual menu item
+        function renderMenuItem(item) {
+            return `
+                <div class="menu-item">
+                    <div class="menu-item-img">${item.emoji}</div>
+                    <div class="menu-item-content">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <div class="menu-item-footer">
+                            <span class="price">₹${item.price}</span>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="updateCart(${item.id}, -1)">-</button>
+                                <span class="qty-display" id="qty-${item.id}">${cart[item.id] || 0}</span>
+                                <button class="qty-btn" onclick="updateCart(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update Cart
+        function updateCart(itemId, change) {
+            if (!cart[itemId]) cart[itemId] = 0;
+            cart[itemId] = Math.max(0, cart[itemId] + change);
+            document.getElementById(`qty-${itemId}`).textContent = cart[itemId];
+            renderCart();
+        }
+
+        // Render Cart
+        function renderCart() {
+            const cartDiv = document.getElementById('cartItems');
+            const items = Object.entries(cart).filter(([id, qty]) => qty > 0);
+            
+            if (items.length === 0) {
+                cartDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🛒</div><p>Your cart is empty</p></div>';
+                document.getElementById('cartTotal').textContent = '₹0';
+                return;
+            }
+
+            let total = 0;
+            cartDiv.innerHTML = items.map(([id, qty]) => {
+                const item = menuItems.find(m => m.id == id);
+                const subtotal = item.price * qty;
+                total += subtotal;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong>
+                            <div style="color: #6b7280; font-size: 14px;">${qty} × ₹${item.price}</div>
+                        </div>
+                        <div style="font-weight: 700; color: var(--primary-green);">₹${subtotal}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cartTotal').textContent = `₹${total}`;
+        }
+
+        // Place Order
+        function placeOrder() {
+            const items = Object.entries(cart).filter(([id, qty]) => qty > 0);
+            if (items.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const order = {
+                id: orders.length + 1,
+                items: items.map(([id, qty]) => {
+                    const item = menuItems.find(m => m.id == id);
+                    return { name: item.name, qty: qty, price: item.price };
+                }),
+                itemsText: items.map(([id, qty]) => {
+                    const item = menuItems.find(m => m.id == id);
+                    return `${item.name} (${qty})`;
+                }).join(', '),
+                status: 'order-placed',
+                time: new Date().toLocaleString(),
+                total: Object.entries(cart).reduce((sum, [id, qty]) => {
+                    const item = menuItems.find(m => m.id == id);
+                    return sum + (item.price * qty);
+                }, 0)
+            };
+
+            orders.push(order);
+            cart = {};
+            renderMenu();
+            renderCart();
+            alert('Order placed successfully!');
+            showSection('orders');
+        }
+
+        // Show Section
+        function showSection(section) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (section === 'menu') {
+                document.getElementById('menuSection').classList.remove('hidden');
+                document.getElementById('ordersSection').classList.add('hidden');
+            } else {
+                document.getElementById('menuSection').classList.add('hidden');
+                document.getElementById('ordersSection').classList.remove('hidden');
+                renderOrders();
+            }
+        }
+
+        // Render Orders
+        function renderOrders() {
+            const ordersDiv = document.getElementById('ordersList');
+            if (orders.length === 0) {
+                ordersDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><p>No orders yet</p></div>';
+                return;
+            }
+
+            ordersDiv.innerHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Order #${order.id}</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <span class="status-badge status-${order.status}">${order.status.replace('-', ' ')}</span>
+                            <button class="print-btn" onclick="printReceipt(${order.id})">
+                                🖨️ Print
+                            </button>
+                        </div>
+                    </div>
+                    <div class="order-items">${order.itemsText}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="order-time">${order.time}</span>
+                        <span style="font-weight: 700; color: var(--primary-green); font-size: 18px;">₹${order.total}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Print Receipt
+        function printReceipt(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const receiptDiv = document.getElementById('receiptTemplate');
+            
+            receiptDiv.innerHTML = `
+                <div class="receipt-header">
+                    <h1>CanteenEase</h1>
+                    <p>Effortless Food Booking Platform</p>
+                    <p>📍 Canteen Desk, Campus</p>
+                    <p>📞 +91 98765 43210</p>
+                </div>
+                
+                <div class="receipt-body">
+                    <div class="receipt-info">
+                        <span><strong>Order ID:</strong></span>
+                        <span>#${order.id}</span>
+                    </div>
+                    <div class="receipt-info">
+                        <span><strong>Customer:</strong></span>
+                        <span>${currentUser}</span>
+                    </div>
+                    <div class="receipt-info">
+                        <span><strong>Date & Time:</strong></span>
+                        <span>${order.time}</span>
+                    </div>
+                    <div class="receipt-info">
+                        <span><strong>Status:</strong></span>
+                        <span style="text-transform: uppercase;">${order.status.replace('-', ' ')}</span>
+                    </div>
+                    
+                    <div class="receipt-items">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold;">
+                            <span>ITEM</span>
+                            <span>QTY × PRICE</span>
+                        </div>
+                        ${order.items.map(item => `
+                            <div class="receipt-item">
+                                <span>${item.name}</span>
+                                <span>${item.qty} × ₹${item.price}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="receipt-total">
+                        <span>TOTAL:</span>
+                        <span>₹${order.total}</span>
+                    </div>
+                </div>
+                
+                <div class="receipt-footer">
+                    <p>Thank you for your order!</p>
+                    <p>Visit us again 😊</p>
+                    <p style="margin-top: 10px;">━━━━━━━━━━━━━━━━━━━━━</p>
+                    <p style="font-size: 10px; margin-top: 5px;">Powered by CanteenEase System</p>
+                </div>
+            `;
+            
+            document.getElementById('receiptModal').classList.add('show');
+        }
+
+        function doPrint() {
+            window.print();
+        }
+
+        function closeReceipt() {
+            document.getElementById('receiptModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('receiptModal');
+            if (e.target === modal) {
+                closeReceipt();
+            }
+        });
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            cart = {};
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('authScreen').classList.remove('hidden');
+            document.getElementById('authForm').reset();
+        }
+    </script>
+</body>
+</html>
